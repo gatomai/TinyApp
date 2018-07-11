@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include ./partials/_header.ejs %>
+</head>
+
+<body>
+    <!-- Add your EJS code here -->
+    <p>
+        <%for(var element in urls){ %>
+            <p>
+                <%=urls[element] %>
+            </p>
+            <p>
+                <%=element %>
+            </p>
+            <form method="POST" action="/urls/<%=element %>/delete">
+                <input type="submit" name="delete" value="Delete" />
+                <a href="/urls/<%=element %>">Edit</a>
+            </form>
+            <% } %>
+    </p>
+    <p>
+        <a href="www.google.com">Test</a>
+    </p>
+
+</body>
+
+</html>
+<p>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+        
+<head>
+        <% include ./partials/_header.ejs %>
+</head>
+
+<body>
+    <!-- Add your EJS code here -->
+    
+    <p>
+            <p><%=shortURL %></p>            
+            <p><%=urls[shortURL] %></p>      
+            
+            <form method="POST" action="/urls/<%=shortURL %>/update">
+                <input id="longURL" type="text" name="longURL" placeholder="http://" value="<%= urls[shortURL] %>" style="width: 300px">
+                <input type="submit" name="update" value="Update" />
+
+            </form>
+    </p>
+    <p><a href="www.google.com">Test</a></p>
+
+</body>
+
+</html>
+<p>

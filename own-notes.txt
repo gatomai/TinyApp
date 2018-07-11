@@ -1,0 +1,9 @@
+    <form action = "" method = "post">
+        <input type="submit" name="upvote" value="Upvote" />
+    </form>
+
+    delete urlDatabase.req.params.id;
+
+    curl -X POST "http://localhost:8080/urls/diablo/delete"
+
+    curl -X "http://localhost:8080/urls/diablo/delete"
