@@ -3,18 +3,13 @@
 </head>
 
 <body>
-    <!-- Add your EJS code here -->
-    <% if(!username){ %>
-        <form method="POST" action="/login">
-            <input id="username" type="text" name="username" placeholder="Username" value="" style="width: 300px">
-            <input type="submit" name="submit" value="SUBMIT" />
-        </form>
+    <% if(!user_id){ %>
+        <a href="/login">Login</a> <a href="/register">Register</a>
         <% } else { %>
-            <%=username %>
-                <form method="GET" action="/logout">
-                    <input id="logout" type="submit" name="logout" value="LOGOUT" />
-                </form>
+            Welcome  <%=user_id %><br>
+                <a href="/logout">Logout</a>
                 <% } %>
+                <br>
 </body>
 
 </html>

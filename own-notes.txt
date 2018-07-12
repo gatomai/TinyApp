@@ -8,16 +8,16 @@
 
     curl -X "http://localhost:8080/urls/diablo/delete"
 
+
+res.status(400);
+res.send('None shall pass')    
+
 commit and push all changes to the master branch
 git branch feature/cookies
 git show-branch
-<<<<<<< HEAD
 git checkout feature/cookies
 
 To Merge:
 Commit to feature branch
 git checkout master
 git merge origin/feature/cookies
-=======
-git checkout feature/cookies
->>>>>>> origin/feature/cookies
