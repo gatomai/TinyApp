@@ -18,6 +18,6 @@ git show-branch
 git checkout feature/cookies
 
 To Merge:
-Commit to feature branch
+Commit to feature branch (git push --set-upstream origin feature/user-registration)
 git checkout master
-git merge origin/feature/cookies
+git merge origin/feature/user-registration
