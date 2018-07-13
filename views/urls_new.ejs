@@ -5,6 +5,7 @@
     <% include ./partials/_header %>
     <% if(user_id){ %>
     <form action="/urls" method="POST" style="margin:150px;">
+      <h3>Please prefix the URL with http://</h3>
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
       <input type="submit" value="Submit">
