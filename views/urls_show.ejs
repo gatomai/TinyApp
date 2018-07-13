@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-        
+
 <head>
 </head>
 
 <body>
     <!-- Add your EJS code here -->
     <% include ./partials/_header %>
-    
-    <p>
-            <p><%=shortURL %></p>            
-            <p><%=urls %></p>
-            
-            <form method="POST" action="/urls/<%=shortURL %>/update">
-                <input id="longURL" type="text" name="longURL" placeholder="http://" value="<%= urls %>" style="width: 300px">
-                <input type="submit" name="update" value="Update" />
 
-            </form>
-    </p>
-    <p><a href="www.google.com">Test</a></p>
+        <p>
+            <%for(var element in urls){ %>
+                <% if (element === shortURL ) { %>
+                    <%= element %> :
+                        <%= urls[element] %>
+                            <br>
+                            <% } %>
+                                <% } %>
+        </p>
+
 
 </body>
 

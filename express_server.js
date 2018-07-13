@@ -64,16 +64,22 @@ app.get("/", (req, res) => {
 
 app.get("/urls/:id", (req, res) => {
   console.log(req.params.id,'f');
-  console.log(urlIsForUser(req.params.id));
+  console.log(',XXXX',urlIsForUser(req.params.id));
   let templateVars = {
     user_id: urlIsForUser(req.params.id),
     user: users[req.cookies["userid"]],
     shortURL: req.params.id,
-    urls: urlDatabase[urlIsForUser(req.params.id)]
+    urls: urlDatabase[req.cookies["userid"]]
     };
+  console.log(templateVars)
   res.render("urls_show", templateVars);
 });
 
+app.get("/u/:id", (req, res) => {
+  console.log(req.params.id,'g');
+  let longURL = urlForShortIs(req.params.id);
+  res.redirect(longURL);
+});
 
 app.get("/register", (req, res) => {
   console.log(res.body, 'b');
@@ -208,7 +214,7 @@ app.post("/login", (req, res) => {
 
 app.get("/logout", (req, res) => {
   console.log(res.body, 'a');
-  res.clearCookie('userid');
+  res.clearCookie('user_id');
   res.redirect('/login');
 });
 
@@ -241,5 +247,14 @@ function makeid() {
     for(element in urlDatabase) {
       if (urlDatabase[element] = id)
       return element;
+    }
+  }
+
+  function urlForShortIs(turl) {
+    for(element in urlDatabase) {
+        var lurl = (urlDatabase[element][turl]);
+        if (lurl !== undefined) {
+            return lurl;
+        }
     }
   }
