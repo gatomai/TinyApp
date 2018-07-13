@@ -21,3 +21,7 @@ To Merge:
 Commit to feature branch (git push --set-upstream origin feature/user-registration)
 git checkout master
 git merge origin/feature/user-registration
+
+git branch feature/specific-features
+git show-branch
+git checkout feature/specific-features

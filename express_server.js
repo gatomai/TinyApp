@@ -11,29 +11,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
-app.use(function (req, res, next) {
-  console.log(req.method + ": " +req.path);
-  console.log(req.cookies);
-  console.log('- - - - - - - - - - - - - -');
-  console.log(users);
-  console.log('- - - - - - - - - - - - - -');
-  console.log(urlDatabase);
-  console.log('###########################');
-  next();
-});
+// app.use(function (req, res, next) {
+//   console.log(req.method + ": " +req.path);
+//   console.log(req.cookies);
+//   console.log('- - - - - - - - - - - - - -');
+//   console.log(users);
+//   console.log('- - - - - - - - - - - - - -');
+//   console.log(urlDatabase);
+//   console.log('###########################');
+//   next();
+// });
 
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  "userRandomID": {
+    "b2xVn2": "http://www.lighthouselabs.ca",
+    "9sm5xK": "http://www.google.com"
+  },
+  "BBBBB": {
+    "b2aVy9": "http://www.greenhouselabs.ca",
+    "1se5qg": "http://www.google.in"
+  },
+  "abcde": {
+    "f3t6za": "http://www.bluehouselabs.ca",
+    "h7f8k4": "http://www.google.cn"
+  }
 };
 
 const users = {
-  "userRandomID": {
+  "AAAAA": {
     id: "userRandomID",
     email: "user@example.com",
     password: "purple-monkey-dinosaur"
   },
-  "user2RandomID": {
+  "BBBBB": {
     id: "user2RandomID",
     email: "user2@example.com",
     password: "dishwasher-funk"
@@ -51,6 +61,19 @@ app.get("/", (req, res) => {
   }
   res.end("Hello!");
 });
+
+app.get("/urls/:id", (req, res) => {
+  console.log(req.params.id,'f');
+  console.log(urlIsForUser(req.params.id));
+  let templateVars = {
+    user_id: urlIsForUser(req.params.id),
+    user: users[req.cookies["userid"]],
+    shortURL: req.params.id,
+    urls: urlDatabase[urlIsForUser(req.params.id)]
+    };
+  res.render("urls_show", templateVars);
+});
+
 
 app.get("/register", (req, res) => {
   console.log(res.body, 'b');
@@ -105,7 +128,7 @@ app.get("/urls", (req, res) => {
   let templateVars = {
     user_id: req.cookies["userid"],
     user: users[req.cookies["userid"]],
-    urls: urlDatabase
+    urls: urlDatabase[req.cookies["userid"]]
   };
   console.log(templateVars);
   res.render("urls_index", templateVars);
@@ -127,7 +150,9 @@ app.post("/urls", (req, res) => {
     user_id: req.cookies["userid"]
   }
   res.send(req.body.longURL);
-  urlDatabase[generateRandomString()] = req.body.longURL;
+  var randy = generateRandomString();
+  // urlDatabase[generateRandomString()] = req.body.longURL;
+  urlDatabase[req.cookies["userid"]][randy] = req.body.longURL;
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -135,7 +160,7 @@ app.post("/urls/:id/delete", (req, res) => {
     user_id: req.cookies["userid"]
   }
   console.log(req.body, 'x');  // debug statement to see POST parameters
-  delete urlDatabase[req.params.id];
+  delete urlDatabase[req.cookies["userid"]][req.params.id];
   res.redirect('/urls');
 });
 
@@ -145,7 +170,7 @@ app.post("/urls/:id/update", (req, res) => {
     user_id: req.cookies["userid"]
   }
   // console.log(req.body.longURL);
-  urlDatabase[req.params.id] = req.body.longURL;
+  urlDatabase[req.cookies["userid"]][req.params.id] = req.body.longURL;
   res.redirect('/urls');
 });
 
@@ -181,16 +206,6 @@ app.post("/login", (req, res) => {
   }
 });
 
-app.get("/urls/:id", (req, res) => {
-  console.log(req.params.id);
-  let templateVars = {
-    user_id: req.cookies["userid"],
-    user: users[req.cookies["userid"]],
-    shortURL: req.params.id, urls: urlDatabase
-  };
-  res.render("urls_show", templateVars);
-});
-
 app.get("/logout", (req, res) => {
   console.log(res.body, 'a');
   res.clearCookie('userid');
@@ -221,3 +236,10 @@ function makeid() {
 
   return text;
 }
+
+  function urlIsForUser(id) {
+    for(element in urlDatabase) {
+      if (urlDatabase[element] = id)
+      return element;
+    }
+  }

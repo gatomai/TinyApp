@@ -1,0 +1,18 @@
+const urlDatabase = {
+  "userRandomID": {
+    "b2xVn2": "http://www.lighthouselabs.ca",
+    "9sm5xK": "http://www.google.com"
+  },
+  "BBBBB": {
+    "b2aVy9": "http://www.greenhouselabs.ca",
+    "1se5qg": "http://www.google.in"
+  },
+  "abcde": {
+    "f3t6za": "http://www.bluehouselabs.ca",
+    "h7f8k4": "http://www.google.cn"
+  }
+};
+
+users[userid] = { id: userid, email: req.body.email, password: req.body.password };
+
+res.render("urls_index", {urls: urlDatabase[req.cookies['user_id']]});
