@@ -30,28 +30,37 @@ app.set("view engine", "ejs");
 // });
 
 const urlDatabase = {
-  "userRandomID": {
+  "ZZZZZ": {
+    "b23Vy9": "http://hereistoday.com/",
+    "1s35qg": "http://www.google.in"
+  },
+  "AAAAA": {
     "b2xVn2": "http://www.lighthouselabs.ca",
     "9sm5xK": "http://www.google.com"
   },
   "BBBBB": {
-    "b2aVy9": "http://www.greenhouselabs.ca",
+    "b2aVy9": "http://hereistoday.com/",
     "1se5qg": "http://www.google.in"
   },
   "abcde": {
-    "f3t6za": "http://www.bluehouselabs.ca",
+    "f3t6za": "http://www.rainymood.com/",
     "h7f8k4": "http://www.google.cn"
   }
 };
 
+//passwords: Stored for Testing ONLY
+//"user2@example.com" "purple-monkey-dinosaur"
+//"a@a.com" "dishwasher-funk"
+
+
 const users = {
   "AAAAA": {
-    id: "userRandomID",
+    id: "AAAAA",
     email: "user@example.com",
     password: "$2a$10$HLujcMUDftWaHYhtv6PnJ.jvrP/zlz9COe/Wh3x9GLOzbnhSa6LlO"
   },
   "BBBBB": {
-    id: "user2RandomID",
+    id: "BBBBB",
     email: "user2@example.com",
     password: "$2a$10$fiDwBuuSE8/TQAQgam3Ee.j1gaDY3Ank2nBiFRMDC1glmQimmfXni"
   },
@@ -99,7 +108,7 @@ app.post("/register", (req, res) => {
     res.send('Email and/or Password cannot be blank');
   }
 
-  for (var element in users) {
+  for (let element in users) {
     if (req.body.email === users[element].email) {
       res.status(400);
       res.send('Email already exists');
@@ -150,13 +159,19 @@ app.get("/urls/new", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
+  let param = req.params.id;
   console.log(req.params.id,'f');
+  console.log(req.session.user_id,'Session-user_id');  
   console.log(',XXXX',urlIsForUser(req.params.id));
   let templateVars = {
-    user_id: urlIsForUser(req.params.id),
+    // user_id: urlIsForUser(req.params.id),
+    user_id: req.session.user_id,
     user: users[req.session.user_id],
     shortURL: req.params.id,
+    urls: urlDatabase,
+    // longURL : urlDatabase[req.session.user_id].param,
     urls: urlDatabase[req.session.user_id]
+    // urls: Object.values(urlDatabase.req.session.user_id)
     };
   console.log(templateVars)
   res.render("urls_show", templateVars);
@@ -169,12 +184,18 @@ app.post("/urls", (req, res) => {
     user_id: req.session.user_id
   }
   
-  var randy = generateRandomString();
+  let rando = generateRandomString();
+  // console.log(rando,'Random String');
+  let session_id = req.session.user_id;
+  // console.log(session_id,'SessionID');
   // urlDatabase[generateRandomString()] = req.body.longURL;
-  console.log(urlDatabase[req.session.user_id],'Before');
-  urlDatabase[req.session.user_id][randy] = req.body.longURL;
-  console.log(urlDatabase[req.session.user_id],'After');
-  res.send(req.body.longURL);
+  // console.log(urlDatabase[req.session.user_id],'Before');
+  // urlDatabase[req.session.user_id][rando] = req.body.longURL;
+  urlDatabase[session_id] = {[rando]: req.body.longURL};
+  // console.log(urlDatabase[req.session.user_id],'After');
+  res.set(req.body.longURL);
+  // res.send(req.body.longURL);
+  res.redirect('/urls');
 });
 
 app.post("/urls/:id/delete", (req, res) => {
@@ -210,7 +231,7 @@ app.post("/login", (req, res) => {
     res.send('Email and/or Password cannot be blank');
   }
 
-  for (var element in users) {
+  for (let element in users) {
     if (req.body.email === users[element].email) {
       // if (req.body.password === users[element].password) {
         // console.log(users[element].password);
@@ -225,8 +246,9 @@ app.post("/login", (req, res) => {
     }
   }
 
-  for (var element in users) {
-    if (req.body.email !== users[element].email && (!(bcrypt.hashSync(req.body.password,users[element].password)))) {
+  for (let element in users) {
+    console.log(users[element].email,'User Email');
+    if (req.body.email !== users[element].email && (!(bcrypt.compareSync(req.body.password,users[element].password)))) {
         res.status(403);
         res.send('Email and/or Password is wrong');
     }
@@ -254,11 +276,12 @@ function generateRandomString() {
   return makeid();
 }
 
+//Function used from External Source
 function makeid() {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let text = "";
+  let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-  for (var i = 0; i < 5; i++)
+  for (let i = 0; i < 5; i++)
     text += possible.charAt(Math.floor(Math.random() * possible.length));
 
   return text;
@@ -274,7 +297,7 @@ function makeid() {
   function urlForShortIs(turl) {
     console.log(turl,'Within urlForShortIs');
     for(element in urlDatabase) {        
-        var lurl = (urlDatabase[element][turl]);
+        let lurl = (urlDatabase[element][turl]);
         // console.log(element,urlDatabase[element][turl],turl)
         if (lurl !== undefined) {
             return "www.lg.com";

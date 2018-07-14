@@ -8,7 +8,7 @@
     <!-- Add your EJS code here -->
     <% include ./partials/_header %>    <br>
     <p>
-        <%for(var element in urls){ %>
+        <%for(let element in urls){ %>
             <p>
                 <%=urls[element] %>
             </p>
@@ -21,6 +21,7 @@
             </form>
             <% } %>
     </p>
+    <br><br><br><a href="/urls/new">Add a new URL</a>
 </body>
 
 </html>

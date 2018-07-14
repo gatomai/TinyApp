@@ -8,8 +8,8 @@
     <!-- Add your EJS code here -->
     <% include ./partials/_header %>
 
-        <p>
-            <%for(var element in urls){ %>
+    <p>
+            <%for(let element in urls){ %>
                 <% if (element === shortURL ) { %>
                     <%= element %> :
                         <%= urls[element] %>
