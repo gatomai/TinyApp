@@ -11,17 +11,40 @@
 
 res.status(400);
 res.send('None shall pass')    
+--------------------------------------------------------
 
 commit and push all changes to the master branch
+
+To create a feature branch user-registration:
+---------------------------------------------
+git branch feature/user-registration
+git show-branch
+git checkout user-registration
+
+To create a feature branch cookies:
+-----------------------------------
 git branch feature/cookies
 git show-branch
 git checkout feature/cookies
 
-To Merge:
-Commit to feature branch (git push --set-upstream origin feature/user-registration)
-git checkout master
-git merge origin/feature/user-registration
-
+To create a feature branch specific-features:
+---------------------------------------------
 git branch feature/specific-features
 git show-branch
-git checkout feature/specific-features
+git checkout specific-features
+
+To Merge to Master:
+-------------------
+git show-branch (Should be in respective feature branch)
+git add .
+git commit -m "Message"
+------->  (git push --set-upstream origin feature/user-registration)
+------->  (git push --set-upstream origin feature/cookies)
+------->  (git push --set-upstream origin feature/specific-features)
+
+git checkout master
+git merge feature/user-registration
+git merge feature/cookies
+git merge feature/specific-features
+
+git show-branch
