@@ -21,9 +21,17 @@ Its primary purpose is to shorten URLs.
 
 #Main URL Dashboard
 !["Screenshot of URLs"](https://github.com/gatomai/TinyApp/blob/master/docs/URL-Dashboard.png)
+
+#Register New user
 !["Screenshot of register"](https://github.com/gatomai/TinyApp/blob/master/docs/Register-New_user.png)
+
+#Add New URL Page
 !["Screenshot of Add New URL Page"](https://github.com/gatomai/TinyApp/blob/feature/specific-features/docs/Add-New-URL.png)
+
+#Before and After Update
 !["Screenshot of Before Update"](https://github.com/gatomai/TinyApp/blob/master/docs/Pre-UPDATE.png)
 !["Screenshot of After Update"](https://github.com/gatomai/TinyApp/blob/master/docs/Post-UPDATE.png)
+
+#Before and After Delete
 !["Screenshot of Before Delete"](https://github.com/gatomai/TinyApp/blob/master/docs/PreDelete-Dashboard.png)
 !["Screenshot of After Delete"](https://github.com/gatomai/TinyApp/blob/master/docs/Post-Delete.png)
